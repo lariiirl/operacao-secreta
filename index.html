@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operacao Secreta</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; padding: 25px 16px;
+  background: #050807; color: #39ff88;
+  font-family: monospace; display: flex;
+  justify-content: center; align-items: center;
+}
+.terminal {
+  width: 100%; max-width: 440px; padding: 24px;
+  border: 1px solid #1aff78; border-radius: 12px;
+  box-shadow: 0 0 25px #00ff4420;
+}
+.top { color: #8bffa9; border-bottom: 1px solid #194a2b; padding-bottom: 14px; }
+h1 { font-size: 23px; text-shadow: 0 0 12px #00ff66; }
+p { line-height: 1.7; color: #c3f8d1; }
+.green { color: #39ff88; }
+button {
+  width: 100%; padding: 14px; margin-top: 12px;
+  background: #071b10; border: 1px solid #39ff88;
+  color: #39ff88; font: bold 15px monospace;
+  border-radius: 5px; cursor: pointer;
+}
+button:active { background: #164b29; }
+input {
+  width: 100%; padding: 13px; margin-top: 10px;
+  background: #020503; border: 1px solid #39ff88;
+  color: #39ff88; font: 16px monospace;
+}
+.small { font-size: 12px; color: #6fba85; }
+.hidden { display: none; }
+#message { white-space: pre-line; }
+</style>
+</head>
+<body>
+<main class="terminal">
+  <div class="top">● SYSTEM ONLINE<br>● CONEXÃO CRIPTOGRAFADA</div>
+  <h1>OPERAÇÃO PAQUERA.exe</h1>
+  <p class="small">ARQUIVO CONFIDENCIAL // ACESSO RESTRITO</p>
+
+  <section id="start">
+    <p>> Novo usuário detectado...</p>
+    <p>Você foi selecionado para uma missão misteriosa.</p>
+    <p>Deseja descobrir o que está por trás deste sistema?</p>
+    <button onclick="begin()">[ INICIAR MISSÃO ]</button>
+    <button onclick="leave()">[ TENTAR SAIR ]</button>
+  </section>
+
+  <section id="challenge" class="hidden">
+    <p class="green">FASE 01 // TESTE DE LÓGICA</p>
+    <p>Se 2 hackers escrevem 2 códigos em 2 minutos, quanto tempo 4 hackers levam para escrever 4 códigos iguais, trabalhando no mesmo ritmo?</p>
+    <input id="answer" placeholder="Digite sua resposta..." autocomplete="off">
+    <button onclick="check()">[ VALIDAR RESPOSTA ]</button>
+    <p id="hint" class="small"></p>
+  </section>
+
+  <section id="final" class="hidden">
+    <p class="green">ACESSO AUTORIZADO ✓</p>
+    <p>> Descriptografando arquivo...</p>
+    <p id="message">Um último arquivo foi encontrado.</p>
+    <button onclick="reveal()">[ ABRIR ARQUIVO SECRETO ]</button>
+  </section>
+
+  <section id="secret" class="hidden">
+    <p class="green">★ MENSAGEM DESBLOQUEADA ★</p>
+    <p>Entre tantos códigos no mundo, alguns despertam uma curiosidade diferente...</p>
+    <p>Talvez alguém tenha criado esta missão só para ter uma desculpa de chamar sua atenção. 👀</p>
+    <p class="small">FIM DA TRANSMISSÃO // OU SERÁ QUE NÃO?</p>
+    <button onclick="again()">[ REINICIAR SISTEMA ]</button>
+  </section>
+  <p id="status" class="small">Aguardando comando...</p>
+</main>
+
+<script>
+function show(id) {
+  document.querySelectorAll("main section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+function begin() {
+  show("challenge");
+  document.getElementById("status").textContent = "Missão iniciada...";
+}
+function leave() {
+  document.getElementById("status").textContent =
+    "Acesso negado: sua curiosidade foi detectada. Tente novamente!";
+}
+function check() {
+  const a = document.getElementById("answer").value.trim().toLowerCase();
+  if (["2", "2 minutos", "dois minutos"].includes(a)) {
+    show("final");
+    document.getElementById("status").textContent = "Resposta correta.";
+  } else {
+    document.getElementById("hint").textContent =
+      "Dica: cada hacker consegue escrever um código em 2 minutos.";
+  }
+}
+function reveal() {
+  show("secret");
+  document.getElementById("status").textContent = "Arquivo aberto. Segredo revelado.";
+}
+function again() {
+  document.getElementById("answer").value = "";
+  document.getElementById("hint").textContent = "";
+  show("start");
+  document.getElementById("status").textContent = "Sistema reiniciado.";
+}
+</script>
+</body>
+</html>
